@@ -1,0 +1,816 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TOFABIZ | Uniform Total Service</title>
+  <meta name="description" content="TOFABIZ — 유니폼 생산제조 · 세탁렌탈 · 온라인 맞춤 제작. 전통 제조의 정교함과 스마트 관리 기술로 유니폼 운영을 혁신합니다." />
+  <meta name="theme-color" content="#0b0f17" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css" />
+
+  <style>
+    :root{
+      --bg:#070a10;
+      --bg2:#0b0f17;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.09);
+      --line: rgba(255,255,255,.12);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.64);
+      --muted2: rgba(255,255,255,.48);
+      --gold:#d7b46a;
+      --gold2:#f0d79a;
+      --accent:#7ee7ff;
+      --shadow: 0 20px 80px rgba(0,0,0,.45);
+      --radius: 18px;
+      --radius2: 28px;
+      --max: 1120px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Pretendard Variable", Pretendard, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 80% -10%, rgba(215,180,106,.26), transparent 60%),
+        radial-gradient(900px 520px at 10% 10%, rgba(126,231,255,.16), transparent 60%),
+        radial-gradient(900px 520px at 60% 80%, rgba(215,180,106,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 55%, #070a10 100%);
+      overflow-x:hidden;
+    }
+
+    a{color:inherit; text-decoration:none}
+    .container{width:min(var(--max), calc(100% - 48px)); margin:0 auto}
+
+    /* Subtle animated grain */
+    .grain{
+      pointer-events:none;
+      position:fixed; inset:-40%;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='.28'/%3E%3C/svg%3E");
+      mix-blend-mode:overlay;
+      opacity:.18;
+      transform:translateZ(0);
+      animation:grain 14s steps(2) infinite;
+    }
+    @keyframes grain{
+      0%{transform:translate(-2%, -3%)}
+      50%{transform:translate(3%, 2%)}
+      100%{transform:translate(-2%, -3%)}
+    }
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(7,10,16,.72) 0%, rgba(7,10,16,.38) 100%);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      letter-spacing:.2px;
+    }
+    .mark{
+      width:34px; height:34px; border-radius:10px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(240,215,154,.9), rgba(215,180,106,.1) 60%),
+        linear-gradient(135deg, rgba(126,231,255,.35), rgba(255,255,255,.05));
+      border:1px solid rgba(215,180,106,.35);
+      box-shadow: 0 10px 35px rgba(215,180,106,.18);
+      position:relative;
+      overflow:hidden;
+    }
+    .mark:after{
+      content:"";
+      position:absolute; inset:-30%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.32), transparent);
+      transform:rotate(25deg) translateX(-80%);
+      animation:shine 5.4s ease-in-out infinite;
+    }
+    @keyframes shine{
+      0%,55%{transform:rotate(25deg) translateX(-90%)}
+      70%{transform:rotate(25deg) translateX(20%)}
+      100%{transform:rotate(25deg) translateX(140%)}
+    }
+    .brand strong{font-weight:760}
+    .brand small{display:block; color:var(--muted2); font-size:12px; margin-top:2px}
+    .menu{
+      display:flex; align-items:center; gap:18px;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .menu a{padding:8px 10px; border-radius:10px}
+    .menu a:hover{background:rgba(255,255,255,.06); color:var(--text)}
+    .cta{
+      display:flex; align-items:center; gap:10px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      font-size:14px;
+      transition:.22s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,.22);
+    }
+    .btn:hover{transform: translateY(-1px); background:rgba(255,255,255,.08)}
+    .btn.primary{
+      border:1px solid rgba(215,180,106,.55);
+      background:
+        radial-gradient(120% 160% at 20% 20%, rgba(240,215,154,.38), transparent 55%),
+        linear-gradient(135deg, rgba(215,180,106,.22), rgba(255,255,255,.04));
+    }
+    .btn.primary:hover{
+      box-shadow:0 18px 60px rgba(215,180,106,.14);
+    }
+
+    /* Hero */
+    .hero{
+      padding: 72px 0 34px;
+      position:relative;
+    }
+    .hero-grid{
+      display:grid; grid-template-columns: 1.2fr .8fr;
+      gap:26px;
+      align-items:stretch;
+    }
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      font-size:13px;
+      width:fit-content;
+    }
+    .dot{
+      width:8px; height:8px; border-radius:999px;
+      background: linear-gradient(180deg, var(--gold2), var(--gold));
+      box-shadow:0 0 0 4px rgba(215,180,106,.15);
+    }
+    h1{
+      margin:16px 0 10px;
+      font-size: clamp(34px, 4.4vw, 54px);
+      line-height:1.08;
+      letter-spacing:-.6px;
+    }
+    .lead{
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height:1.6;
+      max-width: 56ch;
+    }
+    .hero-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px}
+    .meta{
+      margin-top:18px;
+      display:flex; gap:14px; flex-wrap:wrap;
+      color:var(--muted2); font-size:13px;
+    }
+    .meta span{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      border-radius:12px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.10);
+    }
+
+    .hero-card{
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(120% 120% at 20% 10%, rgba(126,231,255,.16), transparent 52%),
+        radial-gradient(120% 120% at 90% 30%, rgba(215,180,106,.18), transparent 55%),
+        rgba(255,255,255,.04);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+      min-height: 340px;
+    }
+    .hero-card .inner{
+      padding:20px 20px 18px;
+      display:flex; flex-direction:column; gap:12px;
+      height:100%;
+    }
+    .stat-grid{
+      display:grid; grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin-top:auto;
+    }
+    .stat{
+      padding:14px;
+      border-radius:16px;
+      background:rgba(0,0,0,.20);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .stat b{display:block; font-size:18px; letter-spacing:-.2px}
+    .stat small{color:var(--muted2)}
+    .hero-card .badge{
+      position:absolute; top:14px; right:14px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(215,180,106,.42);
+      background:rgba(215,180,106,.10);
+      color:rgba(240,215,154,.95);
+      font-size:12px;
+    }
+
+    /* Sections */
+    section{padding: 46px 0}
+    .section-title{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap:18px; flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+    .section-title h2{
+      margin:0;
+      font-size:24px;
+      letter-spacing:-.2px;
+    }
+    .section-title p{
+      margin:0;
+      color:var(--muted);
+      max-width: 70ch;
+      line-height:1.6;
+      font-size:14px;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    .card{
+      padding:18px;
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: 0 16px 50px rgba(0,0,0,.22);
+      position:relative;
+      overflow:hidden;
+      transition: .22s ease;
+      min-height: 180px;
+    }
+    .card:hover{transform: translateY(-2px); border-color: rgba(215,180,106,.26)}
+    .card:before{
+      content:"";
+      position:absolute; inset:-1px;
+      background: radial-gradient(600px 120px at 30% 0%, rgba(215,180,106,.12), transparent 60%);
+      opacity:.8;
+      pointer-events:none;
+    }
+    .card h3{margin:0 0 8px; font-size:16px}
+    .card p{margin:0; color:var(--muted); line-height:1.6; font-size:14px}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.10);
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:10px;
+      width:fit-content;
+    }
+
+    /* Split */
+    .split{
+      display:grid; grid-template-columns: 1fr 1fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    .panel{
+      padding:20px;
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .panel h3{margin:0 0 10px}
+    .panel p{margin:0; color:var(--muted); line-height:1.7; font-size:14px}
+    .list{
+      margin:14px 0 0; padding:0; list-style:none;
+      display:grid; gap:10px;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .list li{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:10px 12px;
+      border-radius:14px;
+      background:rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .check{
+      width:18px; height:18px; border-radius:6px;
+      background: linear-gradient(180deg, rgba(240,215,154,.95), rgba(215,180,106,.55));
+      box-shadow: 0 10px 30px rgba(215,180,106,.12);
+      flex:0 0 auto;
+      margin-top:1px;
+    }
+
+    /* Process */
+    .steps{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:12px;
+    }
+    .step{
+      padding:16px;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      position:relative;
+      overflow:hidden;
+      min-height: 140px;
+    }
+    .step b{
+      display:inline-flex;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(215,180,106,.35);
+      background: rgba(215,180,106,.08);
+      color: rgba(240,215,154,.95);
+      font-size:12px;
+      margin-bottom:10px;
+    }
+    .step h4{margin:0 0 8px; font-size:15px}
+    .step p{margin:0; color:var(--muted); line-height:1.6; font-size:13.5px}
+
+    /* Contact */
+    .contact{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    form{
+      display:grid; gap:10px;
+      margin-top:12px;
+    }
+    label{font-size:13px; color:var(--muted)}
+    input, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      outline:none;
+      transition:.2s ease;
+      font-size:14px;
+    }
+    input:focus, textarea:focus{border-color: rgba(215,180,106,.38); box-shadow:0 0 0 4px rgba(215,180,106,.10)}
+    textarea{min-height:120px; resize:vertical}
+    .hint{color:var(--muted2); font-size:12.5px; line-height:1.5}
+
+    footer{
+      padding: 28px 0 36px;
+      border-top:1px solid rgba(255,255,255,.08);
+      color:var(--muted2);
+      font-size:13px;
+    }
+    .footer-grid{
+      display:flex; align-items:flex-start; justify-content:space-between;
+      gap:14px; flex-wrap:wrap;
+    }
+    .links{display:flex; gap:12px; flex-wrap:wrap}
+    .links a{padding:8px 10px; border-radius:12px; border:1px solid rgba(255,255,255,.10); background:rgba(255,255,255,.03)}
+    .links a:hover{background:rgba(255,255,255,.06); color:var(--text)}
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-grid{grid-template-columns: 1fr; }
+      .cards{grid-template-columns: 1fr; }
+      .split{grid-template-columns: 1fr;}
+      .steps{grid-template-columns: 1fr 1fr;}
+      .contact{grid-template-columns: 1fr;}
+      .menu{display:none}
+    }
+    @media (max-width: 520px){
+      .steps{grid-template-columns: 1fr;}
+      .meta span{width:100%}
+    }
+
+    /* Reveal animations */
+    .reveal{opacity:0; transform: translateY(10px); transition: .6s ease}
+    .reveal.show{opacity:1; transform:none}
+  </style>
+</head>
+
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header>
+    <div class="container">
+      <div class="nav">
+        <a class="brand" href="#top" aria-label="TOFABIZ 홈으로">
+          <span class="mark" aria-hidden="true"></span>
+          <span>
+            <strong>TOFABIZ</strong>
+            <small>Uniform Total Service</small>
+          </span>
+        </a>
+
+        <nav class="menu" aria-label="주요 메뉴">
+          <a href="#services">서비스</a>
+          <a href="#smart">스마트 관리</a>
+          <a href="#sustain">지속가능성</a>
+          <a href="#process">프로세스</a>
+          <a href="#contact">문의</a>
+        </nav>
+
+        <div class="cta">
+          <a class="btn" href="#contact">견적 문의</a>
+          <a class="btn primary" href="#services">서비스 보기</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="reveal">
+            <div class="kicker">
+              <span class="dot" aria-hidden="true"></span>
+              전통 제조의 손끝 × 디지털 운영의 속도
+            </div>
+
+            <h1>
+              유니폼이 <span style="color:var(--gold2)">관리</span>될 때,<br/>
+              브랜드는 <span style="color:var(--accent)">빛</span>이 납니다.
+            </h1>
+
+            <p class="lead">
+              TOFABIZ는 <b>유니폼 생산·제조</b>, <b>세탁렌탈</b>, <b>온라인 맞춤 제작</b>을 하나로 묶어
+              운영의 번거로움은 덜고, 현장의 품격은 올립니다.<br/>
+              한 벌의 유니폼에 “미래형 관리”라는 시간을 입힙니다.
+            </p>
+
+            <div class="hero-actions">
+              <a class="btn primary" href="#contact">프로젝트 상담하기</a>
+              <a class="btn" href="#process">도입 흐름 보기</a>
+              <!-- 아래 링크는 실제 채널 주소로 교체하세요 -->
+              <a class="btn" href="https://www.youtube.com" target="_blank" rel="noreferrer">YouTube</a>
+              <a class="btn" href="https://www.instagram.com" target="_blank" rel="noreferrer">Instagram</a>
+            </div>
+
+            <div class="meta">
+              <span>맞춤 제작 · 단체 유니폼</span>
+              <span>세탁/수거/배송 운영</span>
+              <span>온라인 제작 & 발주</span>
+            </div>
+          </div>
+
+          <aside class="hero-card reveal" aria-label="TOFABIZ 요약 카드">
+            <div class="badge">Premium Workflow</div>
+            <div class="inner">
+              <div>
+                <div class="pill">TOFABIZ ONE-STOP</div>
+                <h3 style="margin:0 0 6px; letter-spacing:-.2px;">생산부터 세탁렌탈까지, 끊김 없는 공급망</h3>
+                <p style="margin:0; color:var(--muted); line-height:1.65; font-size:14px;">
+                  현장의 유니폼 운영을 <b>표준화</b>하고, 재고·회수·세탁·재배포까지
+                  흐름을 <b>한 화면</b>으로 정리합니다.
+                </p>
+              </div>
+
+              <div class="stat-grid" aria-label="핵심 가치">
+                <div class="stat">
+                  <b>제조 품질</b>
+                  <small>국내 생산 기반 · 맞춤 설계</small>
+                </div>
+                <div class="stat">
+                  <b>운영 효율</b>
+                  <small>세탁렌탈 · 수거/배송 동선 최적화</small>
+                </div>
+                <div class="stat">
+                  <b>디지털 접점</b>
+                  <small>온라인 제작 · 빠른 발주 경험</small>
+                </div>
+                <div class="stat">
+                  <b>지속가능</b>
+                  <small>순환경제형 유니폼 시스템</small>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services">
+      <div class="container">
+        <div class="section-title reveal">
+          <div>
+            <h2>토탈 서비스, 세 가지 축</h2>
+            <p>유니폼은 “옷”이 아니라 “운영”입니다. TOFABIZ는 제작·세탁·온라인을 하나의 리듬으로 연결합니다.</p>
+          </div>
+        </div>
+
+        <div class="cards">
+          <article class="card reveal">
+            <div class="pill">Manufacturing</div>
+            <h3>유니폼 생산·제조</h3>
+            <p>
+              업종/현장 동선을 반영한 패턴 설계부터 원단·봉제·품질검수까지.
+              오래 입을수록 가치가 드러나는 유니폼을 만듭니다.
+            </p>
+          </article>
+
+          <article class="card reveal">
+            <div class="pill">Laundry Rental</div>
+            <h3>세탁렌탈 운영</h3>
+            <p>
+              세탁·살균·검수·수선·재배포까지. “필요한 순간에, 필요한 수량이”
+              현장에 도착하도록 운영 체계를 설계합니다.
+            </p>
+          </article>
+
+          <article class="card reveal">
+            <div class="pill">Online Custom</div>
+            <h3>온라인 맞춤 제작</h3>
+            <p>
+              온라인에서 간편하게 디자인/사이즈/수량을 구성하고 발주까지.
+              제작 프로세스를 디지털로 정돈해, 속도와 정확도를 함께 잡습니다.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SMART / RFID -->
+    <section id="smart">
+      <div class="container">
+        <div class="split">
+          <div class="panel reveal">
+            <div class="pill">Smart Uniform Ops</div>
+            <h3>스마트 유니폼 관리(확장 영역)</h3>
+            <p>
+              유니폼 운영에서 가장 비싼 비용은 “보이지 않는 누수”입니다.<br/>
+              TOFABIZ는 향후(또는 옵션으로) 유니폼 관리 데이터를 중심으로,
+              분실·재고·회수·교체 주기를 한 번에 파악할 수 있는 구조를 제안합니다.
+            </p>
+
+            <ul class="list">
+              <li><span class="check" aria-hidden="true"></span><span><b>자산 가시화</b> — 수량/상태/회수 흐름을 한 눈에</span></li>
+              <li><span class="check" aria-hidden="true"></span><span><b>운영 표준화</b> — 부서/지점별 편차를 줄이는 룰 설계</span></li>
+              <li><span class="check" aria-hidden="true"></span><span><b>품질 유지</b> — 세탁/수선/교체의 타이밍을 데이터로</span></li>
+            </ul>
+
+            <p class="hint" style="margin-top:12px;">
+              * 실제 RFID/특허/솔루션 상세는 귀사의 제공 자료에 맞게 문구를 조정해 넣어드리면 더 “고급스럽게” 설득됩니다.
+            </p>
+          </div>
+
+          <div class="panel reveal">
+            <div class="pill">Brand Experience</div>
+            <h3>유니폼은 ‘첫인상’의 인프라</h3>
+            <p>
+              고객은 제품보다 먼저 사람을 만나고, 사람보다 먼저 유니폼을 봅니다.
+              TOFABIZ의 목표는 단 하나 — <b>현장의 신뢰가 디자인으로 보이게</b> 만드는 것.
+            </p>
+
+            <div style="margin-top:14px; display:grid; gap:10px;">
+              <div class="step" style="min-height:auto;">
+                <b>디자인</b>
+                <h4>로고·컬러·직무별 기능을 정리</h4>
+                <p>브랜드 가이드에 맞춘 톤앤매너로 “통일감”을 만듭니다.</p>
+              </div>
+              <div class="step" style="min-height:auto;">
+                <b>기능</b>
+                <h4>현장 친화 디테일(포켓·통기·내구)</h4>
+                <p>업종별 착용 상황을 고려해 불편을 줄이고 효율을 올립니다.</p>
+              </div>
+              <div class="step" style="min-height:auto;">
+                <b>운영</b>
+                <h4>세탁렌탈로 유지·교체까지 설계</h4>
+                <p>‘처음처럼’ 유지되는 품질이 결국 비용을 줄입니다.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUSTAINABILITY -->
+    <section id="sustain">
+      <div class="container">
+        <div class="section-title reveal">
+          <div>
+            <h2>순환경제형 세탁렌탈, 지속가능한 유니폼</h2>
+            <p>유니폼을 “소모품”에서 “순환 자산”으로. 비용과 환경 사이, 둘 다 지키는 해답을 설계합니다.</p>
+          </div>
+        </div>
+
+        <div class="cards">
+          <article class="card reveal">
+            <div class="pill">Circular</div>
+            <h3>필요한 만큼만, 오래 쓰게</h3>
+            <p>적정 재고 설계와 주기 관리로 과잉 구매를 줄이고, 사용 기간은 늘립니다.</p>
+          </article>
+          <article class="card reveal">
+            <div class="pill">Care</div>
+            <h3>세탁·살균·검수의 표준화</h3>
+            <p>세탁 품질이 곧 브랜드 품질. 위생·상태·수선 기준을 일관되게 관리합니다.</p>
+          </article>
+          <article class="card reveal">
+            <div class="pill">Impact</div>
+            <h3>운영 데이터로 낭비를 줄이기</h3>
+            <p>반납/교체/분실 패턴을 분석해 ‘새로 사는 비용’보다 ‘잘 관리하는 비용’을 낮춥니다.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section id="process">
+      <div class="container">
+        <div class="section-title reveal">
+          <div>
+            <h2>도입 프로세스</h2>
+            <p>어렵게 느껴지지 않도록, 단계마다 “결정해야 할 것”을 줄여드립니다.</p>
+          </div>
+        </div>
+
+        <div class="steps">
+          <div class="step reveal">
+            <b>STEP 01</b>
+            <h4>현장 파악</h4>
+            <p>직무/동선/오염도/교체 주기 등 운영 조건을 먼저 정리합니다.</p>
+          </div>
+          <div class="step reveal">
+            <b>STEP 02</b>
+            <h4>디자인·스펙 확정</h4>
+            <p>원단·사이즈·부자재·마킹을 확정하고 시제품/샘플을 검토합니다.</p>
+          </div>
+          <div class="step reveal">
+            <b>STEP 03</b>
+            <h4>생산 & 공급</h4>
+            <p>납기/수량/지점별 배포 계획까지 한 번에 맞춰 실행합니다.</p>
+          </div>
+          <div class="step reveal">
+            <b>STEP 04</b>
+            <h4>세탁렌탈 운영</h4>
+            <p>수거·세탁·검수·수선·재배포를 루틴으로 만들어 안정화합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="container">
+        <div class="contact">
+          <div class="panel reveal">
+            <div class="pill">Let’s Build</div>
+            <h3>상담/견적 문의</h3>
+            <p>
+              “몇 벌이 필요할지”보다 먼저 묻겠습니다.<br/>
+              <b>어떤 현장인가요?</b> 현장의 리듬을 알면, 유니폼은 더 오래 아름답게 작동합니다.
+            </p>
+
+            <!-- 안내: 실제 운영 시 action을 서버/폼 서비스로 교체하세요 -->
+            <form onsubmit="return submitDemo(event)">
+              <div>
+                <label for="company">회사/기관명</label>
+                <input id="company" name="company" placeholder="예: TOFABIZ 고객사" autocomplete="organization" required />
+              </div>
+              <div>
+                <label for="name">담당자명</label>
+                <input id="name" name="name" placeholder="예: 홍길동" autocomplete="name" required />
+              </div>
+              <div>
+                <label for="phone">연락처</label>
+                <input id="phone" name="phone" placeholder="예: 010-0000-0000" autocomplete="tel" />
+              </div>
+              <div>
+                <label for="message">문의 내용</label>
+                <textarea id="message" name="message" placeholder="업종/수량/희망 일정/세탁렌탈 여부 등을 적어주세요." required></textarea>
+              </div>
+
+              <button class="btn primary" type="submit">문의 보내기</button>
+              <div class="hint">
+                * 데모 페이지라 제출은 알림으로 대체됩니다. 실제 적용 시 이메일/CRM/카카오 채널로 연결 가능합니다.
+              </div>
+            </form>
+          </div>
+
+          <div class="panel reveal">
+            <div class="pill">Contact</div>
+            <h3>연락 채널(예시)</h3>
+            <p class="hint">아래 정보는 원하시는 값으로 교체해서 사용하세요.</p>
+
+            <div style="margin-top:12px; display:grid; gap:10px;">
+              <div class="step" style="min-height:auto;">
+                <b>전화</b>
+                <h4 style="margin:0 0 6px;">000-0000-0000</h4>
+                <p>평일 09:00–18:00</p>
+              </div>
+              <div class="step" style="min-height:auto;">
+                <b>이메일</b>
+                <h4 style="margin:0 0 6px;">hello@tofabiz.com</h4>
+                <p>자료(로고/가이드/수량표) 보내주시면 더 빠릅니다.</p>
+              </div>
+              <div class="step" style="min-height:auto;">
+                <b>주소</b>
+                <h4 style="margin:0 0 6px;">(우)00000, 대한민국</h4>
+                <p>제조·물류·세탁 운영 인프라 기반</p>
+              </div>
+            </div>
+
+            <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+              <a class="btn" href="#services">서비스 브로셔</a>
+              <a class="btn" href="#smart">스마트 관리</a>
+              <a class="btn" href="#sustain">지속가능성</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="mark" aria-hidden="true" style="width:28px;height:28px;border-radius:9px;"></span>
+              <div>
+                <div style="color:rgba(255,255,255,.88); font-weight:760;">TOFABIZ</div>
+                <div style="margin-top:3px;">Uniform Production · Laundry Rental · Online Custom</div>
+              </div>
+            </div>
+            <div style="margin-top:10px;">
+              © <span id="year"></span> TOFABIZ. All rights reserved.
+            </div>
+          </div>
+
+          <div class="links" aria-label="푸터 링크">
+            <a href="#contact">문의</a>
+            <a href="#process">프로세스</a>
+            <a href="#services">서비스</a>
+            <a href="#top">맨 위로</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Smooth scroll (native + improved focus)
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const id = a.getAttribute('href');
+        if(!id || id === "#") return;
+        const el = document.querySelector(id);
+        if(!el) return;
+        e.preventDefault();
+        el.scrollIntoView({behavior:"smooth", block:"start"});
+        // accessibility: move focus for keyboard users
+        el.setAttribute('tabindex','-1');
+        el.focus({preventScroll:true});
+        setTimeout(()=>el.removeAttribute('tabindex'), 600);
+      });
+    });
+
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(ent=>{
+        if(ent.isIntersecting) ent.target.classList.add('show');
+      });
+    }, {threshold: 0.12});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Demo form submit
+    function submitDemo(e){
+      e.preventDefault();
+      const company = document.getElementById('company').value.trim();
+      const name = document.getElementById('name').value.trim();
+      alert(`문의가 준비되었습니다.\n\n회사/기관: ${company}\n담당자: ${name}\n\n실제 운영에서는 이메일/CRM/카카오채널로 전송되도록 연결하세요.`);
+      return false;
+    }
+  </script>
+</body>
+</html>
