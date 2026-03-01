@@ -693,7 +693,38 @@
       opacity: 1;
       transform: none
     }
-  </style>
+
+    /* === GALLERY === */
+    .gallery-filters { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px; }
+    .gf-btn { padding:8px 16px; border-radius:999px; border:1px solid rgba(255,255,255,.15);
+      background:rgba(255,255,255,.04); color:rgba(255,255,255,.6); font-size:13px;
+      cursor:pointer; transition:.2s; font-family:inherit; }
+    .gf-btn:hover, .gf-btn.active { border-color:rgba(215,180,106,.5);
+      background:rgba(215,180,106,.12); color:var(--gold2); }
+    .gallery-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+    .gallery-item { border-radius:14px; overflow:hidden; aspect-ratio:3/4;
+      background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1);
+      cursor:pointer; position:relative; transition:.22s; }
+    .gallery-item:hover { transform:translateY(-4px); border-color:rgba(215,180,106,.4);
+      box-shadow:0 12px 40px rgba(215,180,106,.15); }
+    .gallery-item img { width:100%; height:100%; object-fit:cover; display:block; }
+    .gallery-item .overlay { position:absolute; inset:0; background:linear-gradient(to top,
+      rgba(7,10,16,.85) 0%, transparent 50%); opacity:0; transition:.2s; display:flex;
+      align-items:flex-end; padding:12px; }
+    .gallery-item:hover .overlay { opacity:1; }
+    .gallery-item .overlay span { font-size:12px; color:var(--gold2); font-weight:600; }
+    .gallery-placeholder { display:flex; flex-direction:column; align-items:center;
+      justify-content:center; gap:8px; height:100%; color:rgba(255,255,255,.2); font-size:12px; }
+    .gallery-placeholder svg { opacity:.3; }
+    /* Lightbox */
+    .lightbox { position:fixed; inset:0; background:rgba(0,0,0,.92); z-index:9999;
+      display:none; align-items:center; justify-content:center; }
+    .lightbox.open { display:flex; }
+    .lightbox img { max-width:90vw; max-height:90vh; border-radius:12px; object-fit:contain; }
+    .lb-close { position:absolute; top:20px; right:24px; font-size:32px; cursor:pointer;
+      color:rgba(255,255,255,.6); background:none; border:none; }
+    @media(max-width:768px) { .gallery-grid { grid-template-columns:repeat(2,1fr); } }
+    @media(max-width:480px) { .gallery-grid { grid-template-columns:repeat(2,1fr); gap:8px; } }  </style>
 
   <!-- Google Analytics GA4 (측정 ID를 G-XXXXXXXXXX → 실제 ID로 교체) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-VYN0B8E41S"></script>
@@ -1132,6 +1163,131 @@
         </div>
       </div>
     </section>
+    <!-- PRODUCT GALLERY -->
+    <section id="gallery" style="padding:60px 0 40px;">
+      <div class="container">
+        <div class="section-title reveal">
+          <div>
+            <h2>👕 유니폼 갤러리</h2>
+            <p>업종별·직무별 유니폼 스타일을 확인하세요. 클릭하면 크게 볼 수 있습니다.</p>
+          </div>
+        </div>
+
+        <!-- 필터 버튼 -->
+        <div class="gallery-filters">
+          <button class="gf-btn active" onclick="filterGallery('all',this)">전체</button>
+          <button class="gf-btn" onclick="filterGallery('hotel',this)">🏨 호텔·서비스</button>
+          <button class="gf-btn" onclick="filterGallery('medical',this)">🏥 의료·병원</button>
+          <button class="gf-btn" onclick="filterGallery('restaurant',this)">🍽️ 요식업</button>
+          <button class="gf-btn" onclick="filterGallery('logistics',this)">🚚 물류·제조</button>
+          <button class="gf-btn" onclick="filterGallery('office',this)">🏢 사무·기업</button>
+        </div>
+
+        <!-- 갤러리 그리드 (이미지 업로드 시 src 교체) -->
+        <div class="gallery-grid" id="gallery-grid">
+          <!-- 호텔 -->
+          <div class="gallery-item reveal" data-cat="hotel" onclick="openLightbox(this)">
+            <div class="gallery-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              <span>호텔 프런트 유니폼</span>
+            </div>
+            <div class="overlay"><span>🏨 호텔 프런트</span></div>
+          </div>
+          <div class="gallery-item reveal" data-cat="hotel" onclick="openLightbox(this)">
+            <div class="gallery-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              <span>하우스키핑 유니폼</span>
+            </div>
+            <div class="overlay"><span>🏨 하우스키핑</span></div>
+          </div>
+          <div class="gallery-item reveal" data-cat="hotel" onclick="openLightbox(this)">
+            <div class="gallery-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              <span>레스토랑 유니폼</span>
+            </div>
+            <div class="overlay"><span>🏨 F&B 레스토랑</span></div>
+          </div>
+          <!-- 의료 -->
+          <div class="gallery-item reveal" data-cat="medical" onclick="openLightbox(this)">
+            <div class="gallery-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              <span>간호사복 스크럽</span>
+            </div>
+            <div class="overlay"><span>🏥 간호사복</span></div>
+          </div>
+          <div class="gallery-item reveal" data-cat="medical" onclick="openLightbox(this)">
+            <div class="gallery-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              <span>원장 가운</span>
+            </div>
+            <div class="overlay"><span>🏥 원장 가운</span></div>
+          </div>
+          <div class="gallery-item reveal" data-cat="medical" onclick="openLightbox(this)">
+            <div class="gallery-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              <span>클리닉 스크럽</span>
+            </div>
+            <div class="overlay"><span>🏥 클리닉 스크럽</span></div>
+          </div>
+          <!-- 요식업 -->
+          <div class="gallery-item reveal" data-cat="restaurant" onclick="openLightbox(this)">
+            <div class="gallery-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              <span>주방복</span>
+            </div>
+            <div class="overlay"><span>🍽️ 주방복</span></div>
+          </div>
+          <div class="gallery-item reveal" data-cat="restaurant" onclick="openLightbox(this)">
+            <div class="gallery-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              <span>카페 홀 유니폼</span>
+            </div>
+            <div class="overlay"><span>🍽️ 카페 홀</span></div>
+          </div>
+          <!-- 물류 -->
+          <div class="gallery-item reveal" data-cat="logistics" onclick="openLightbox(this)">
+            <div class="gallery-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              <span>작업복</span>
+            </div>
+            <div class="overlay"><span>🚚 작업복</span></div>
+          </div>
+          <div class="gallery-item reveal" data-cat="logistics" onclick="openLightbox(this)">
+            <div class="gallery-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              <span>물류 점퍼</span>
+            </div>
+            <div class="overlay"><span>🚚 물류 점퍼</span></div>
+          </div>
+          <!-- 기업 -->
+          <div class="gallery-item reveal" data-cat="office" onclick="openLightbox(this)">
+            <div class="gallery-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              <span>기업 비즈니스 유니폼</span>
+            </div>
+            <div class="overlay"><span>🏢 비즈니스 유니폼</span></div>
+          </div>
+          <div class="gallery-item reveal" data-cat="office" onclick="openLightbox(this)">
+            <div class="gallery-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              <span>사무 단체복</span>
+            </div>
+            <div class="overlay"><span>🏢 사무 단체복</span></div>
+          </div>
+        </div>
+
+        <p style="text-align:center; margin-top:24px; font-size:13px; color:rgba(255,255,255,.35);">
+          📸 실제 유니폼 제품 사진 50장 업로드 예정 · 문의: <a href="#contact" style="color:rgba(215,180,106,.7);">상담하기</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- 라이트박스 -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+      <button class="lb-close" onclick="closeLightbox()">✕</button>
+      <img id="lb-img" src="" alt="유니폼 상세보기" />
+    </div>
+
 
 
 
@@ -1318,6 +1474,25 @@
     // Footer year
     document.getElementById('year').textContent = new Date().getFullYear();
 
+
+    // === GALLERY ===
+    function filterGallery(cat, btn) {
+      document.querySelectorAll('.gf-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.gallery-item').forEach(item => {
+        item.style.display = (cat === 'all' || item.dataset.cat === cat) ? '' : 'none';
+      });
+    }
+    function openLightbox(el) {
+      const img = el.querySelector('img');
+      if (!img) return; // 플레이스홀더는 열지 않음
+      document.getElementById('lb-img').src = img.src;
+      document.getElementById('lightbox').classList.add('open');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+    }
+    document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
     // Footer year already set above
   </script>
 
