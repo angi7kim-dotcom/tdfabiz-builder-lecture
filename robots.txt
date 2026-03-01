@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://angi7kim-dotcom.github.io/tdfabiz-builder-lecture/sitemap.xml
