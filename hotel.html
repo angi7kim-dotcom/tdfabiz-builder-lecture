@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>호텔 유니폼 세탁렌탈 전문 | TOFABIZ</title>
+    <meta name="description"
+        content="호텔·서비스업 전문 유니폼 제조·세탁렌탈. 프리미엄 소재, 빠른 수거·배송, 1개월 무료 체험. 야놀자 등 300개 고객사가 신뢰하는 TOFABIZ." />
+    <meta name="keywords" content="호텔유니폼,호텔세탁렌탈,프런트유니폼,하우스키핑유니폼,레스토랑유니폼" />
+    <link rel="canonical" href="https://angi7kim-dotcom.github.io/tdfabiz-builder-lecture/hotel.html" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8037016451454764"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css" />
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VYN0B8E41S"></script>
+    <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-VYN0B8E41S');</script>
+    <style>
+        :root {
+            --bg: #070a10;
+            --bg2: #0b0f17;
+            --text: rgba(255, 255, 255, .92);
+            --muted: rgba(255, 255, 255, .62);
+            --gold: #d7b46a;
+            --gold2: #f0d79a;
+            --accent: #7ee7ff;
+            --line: rgba(255, 255, 255, .12);
+            --radius: 18px;
+            --max: 1080px
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            font-family: "Pretendard Variable", Pretendard, system-ui, sans-serif;
+            color: var(--text);
+            min-height: 100vh;
+            background: radial-gradient(900px 500px at 80% -5%, rgba(215, 180, 106, .20), transparent 60%),
+                linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%)
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        .wrap {
+            width: min(var(--max), calc(100% - 40px));
+            margin: 0 auto;
+            padding: 48px 0 80px
+        }
+
+        .back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-size: 14px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, .10);
+            background: rgba(255, 255, 255, .04);
+            margin-bottom: 36px;
+            transition: .2s
+        }
+
+        .back:hover {
+            color: var(--text)
+        }
+
+        .tag {
+            display: inline-flex;
+            padding: 6px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(215, 180, 106, .3);
+            background: rgba(215, 180, 106, .08);
+            color: var(--gold2);
+            font-size: 12px;
+            margin-bottom: 14px
+        }
+
+        h1 {
+            font-size: clamp(28px, 4vw, 46px);
+            font-weight: 900;
+            line-height: 1.12;
+            letter-spacing: -.5px;
+            margin-bottom: 16px
+        }
+
+        h1 span {
+            color: var(--gold2)
+        }
+
+        .lead {
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 36px;
+            max-width: 580px
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 56px
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 24px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, .18);
+            background: rgba(255, 255, 255, .06);
+            font-size: 14px;
+            font-weight: 600;
+            transition: .2s
+        }
+
+        .btn.primary {
+            background: linear-gradient(135deg, rgba(215, 180, 106, .35), rgba(215, 180, 106, .15));
+            border-color: rgba(215, 180, 106, .5);
+            color: var(--gold2)
+        }
+
+        .btn:hover {
+            transform: translateY(-2px)
+        }
+
+        /* Event Banner */
+        .event-banner {
+            background: linear-gradient(135deg, rgba(215, 180, 106, .2), rgba(126, 231, 255, .1));
+            border: 1px solid rgba(215, 180, 106, .4);
+            border-radius: 16px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 48px
+        }
+
+        .event-badge {
+            font-size: 11px;
+            color: var(--gold2);
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            margin-bottom: 4px
+        }
+
+        /* Cards grid */
+        h2 {
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: -.3px
+        }
+
+        .sub-lead {
+            color: var(--muted);
+            font-size: 15px;
+            margin-bottom: 28px
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 48px
+        }
+
+        .card {
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 24px
+        }
+
+        .card-emoji {
+            font-size: 32px;
+            margin-bottom: 12px
+        }
+
+        .card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px
+        }
+
+        .card p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.7
+        }
+
+        /* Spec table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 48px
+        }
+
+        th {
+            background: rgba(215, 180, 106, .1);
+            color: var(--gold2);
+            padding: 12px 16px;
+            border: 1px solid var(--line);
+            text-align: left;
+            font-size: 14px
+        }
+
+        td {
+            padding: 12px 16px;
+            border: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        /* CTA */
+        .cta {
+            background: radial-gradient(120% 160% at 10% 10%, rgba(215, 180, 106, .14), transparent 55%), rgba(255, 255, 255, .04);
+            border: 1px solid rgba(215, 180, 106, .3);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center
+        }
+
+        @media(max-width:640px) {
+            .cards {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <a class="back" href="index.html">← TOFABIZ 홈으로</a>
+
+        <div class="tag">🏨 호텔 · 서비스업 전문</div>
+        <h1>호텔 유니폼,<br /><span>첫인상이 브랜드입니다</span></h1>
+        <p class="lead">프런트·하우스키핑·레스토랑·도어맨까지, 직무별 맞춤 유니폼과 정기 세탁렌탈을 하나의 파트너로 해결하세요. 야놀자를 비롯한 국내 주요 호텔이 TOFABIZ를 선택한
+            이유입니다.</p>
+
+        <div class="hero-btns">
+            <a class="btn primary" href="#hotel-cta">🎉 1개월 무료 체험 신청</a>
+            <a class="btn" href="calculator.html">🧮 견적 계산기</a>
+            <a class="btn" href="recommender.html">🤖 AI 유니폼 추천</a>
+        </div>
+
+        <div class="event-banner">
+            <div>
+                <div class="event-badge">LIMITED · 이달 신청 한정</div>
+                <strong style="font-size:18px;">세탁렌탈 1개월 무료 이벤트 진행 중</strong>
+                <p style="color:var(--muted);font-size:13px;margin-top:4px">지금 신청하면 첫 달 세탁렌탈 서비스를 무료로 체험하세요.</p>
+            </div>
+            <a class="btn primary" href="#hotel-cta">지금 신청 →</a>
+        </div>
+
+        <h2>호텔 업종 전용 서비스</h2>
+        <p class="sub-lead">호텔의 각 직무에 최적화된 유니폼과 세탁 솔루션을 제공합니다.</p>
+        <div class="cards">
+            <div class="card">
+                <div class="card-emoji">👔</div>
+                <h3>프런트 & 컨시어지</h3>
+                <p>브랜드 아이덴티티를 반영한 포멀 유니폼. 신축성 소재로 장시간 착용 피로 최소화.</p>
+            </div>
+            <div class="card">
+                <div class="card-emoji">🛏️</div>
+                <h3>하우스키핑</h3>
+                <p>오염 방지 가공, 뛰어난 내구성. 수거·세탁·재배포까지 자동화된 렌탈 시스템으로 관리.</p>
+            </div>
+            <div class="card">
+                <div class="card-emoji">🍽️</div>
+                <h3>F&B · 레스토랑</h3>
+                <p>방수·방오 가공 소재로 주방 및 홀 서비스에 최적화. 로고 자수 포함 맞춤 제작.</p>
+            </div>
+            <div class="card">
+                <div class="card-emoji">🚪</div>
+                <h3>도어맨 & 벨보이</h3>
+                <p>격식 있는 제복형 유니폼. 계절별 소재 교체, 사이즈 조정 포함.</p>
+            </div>
+            <div class="card">
+                <div class="card-emoji">♻️</div>
+                <h3>정기 세탁렌탈</h3>
+                <p>주 1~2회 정기 수거, 살균 세탁 후 깨끗한 상태로 납품. 재고 관리까지.</p>
+            </div>
+            <div class="card">
+                <div class="card-emoji">📊</div>
+                <h3>운영 리포트</h3>
+                <p>수거 현황, 교체 주기, 분실 현황을 월 리포트로 제공. 담당자 업무 부담 ↓</p>
+            </div>
+        </div>
+
+        <h2>소재 & 사양 가이드</h2>
+        <p class="sub-lead">호텔 등급과 직무에 맞는 최적 소재를 제안합니다.</p>
+        <table>
+            <tr>
+                <th>직무</th>
+                <th>권장 소재</th>
+                <th>주요 기능</th>
+                <th>렌탈 주기</th>
+            </tr>
+            <tr>
+                <td>프런트/컨시어지</td>
+                <td>울 혼방 / TR 소재</td>
+                <td>형태 유지, 광택감</td>
+                <td>주 1회</td>
+            </tr>
+            <tr>
+                <td>하우스키핑</td>
+                <td>면·폴리 혼방</td>
+                <td>내구성, 오염 방지</td>
+                <td>주 2~3회</td>
+            </tr>
+            <tr>
+                <td>레스토랑 홀</td>
+                <td>방오 가공 폴리</td>
+                <td>세탁 내구성, 방수</td>
+                <td>주 2회</td>
+            </tr>
+            <tr>
+                <td>주방</td>
+                <td>TC 혼방 (후가공)</td>
+                <td>내열성, 위생</td>
+                <td>주 3회</td>
+            </tr>
+        </table>
+
+        <!-- AdSense 광고 -->
+        <ins class="adsbygoogle" style="display:block;margin:32px 0" data-ad-client="ca-pub-8037016451454764"
+            data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+
+        <div class="cta" id="hotel-cta">
+            <h2 style="margin:0 0 12px">호텔 유니폼 무료 상담 신청</h2>
+            <p style="color:var(--muted);margin-bottom:28px;font-size:15px">이달 신청 시 <b style="color:var(--gold2)">세탁렌탈
+                    1개월 무료</b> + 무료 샘플 1set 제공</p>
+            <form action="https://formspree.io/f/mvzblkby" method="POST" style="max-width:460px;margin:0 auto">
+                <input type="hidden" name="_subject" value="[TOFABIZ] 호텔 유니폼 상담 신청" />
+                <input type="hidden" name="form_type" value="hotel_landing" />
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+                    <input name="company" placeholder="호텔/업체명 *" required
+                        style="padding:12px;border-radius:11px;border:1px solid rgba(255,255,255,.15);background:rgba(0,0,0,.3);color:#fff;font-size:14px;font-family:inherit" />
+                    <input name="name" placeholder="담당자명 *" required
+                        style="padding:12px;border-radius:11px;border:1px solid rgba(255,255,255,.15);background:rgba(0,0,0,.3);color:#fff;font-size:14px;font-family:inherit" />
+                </div>
+                <input name="phone" placeholder="연락처 *" required
+                    style="width:100%;padding:12px;border-radius:11px;border:1px solid rgba(255,255,255,.15);background:rgba(0,0,0,.3);color:#fff;font-size:14px;font-family:inherit;margin-bottom:10px" />
+                <button type="submit"
+                    style="width:100%;padding:15px;border-radius:12px;border:1px solid rgba(215,180,106,.5);background:linear-gradient(135deg,rgba(215,180,106,.35),rgba(215,180,106,.15));color:var(--gold2);font-size:16px;font-weight:700;cursor:pointer;font-family:inherit">1개월
+                    무료 체험 신청 →</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
