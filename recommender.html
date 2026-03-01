@@ -189,7 +189,7 @@
 
         .quick-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 10px;
             margin-bottom: 32px;
         }
@@ -592,7 +592,7 @@
         </div>
         <h1>업종 이미지로<br /><span>맞춤 유니폼</span> 즉시 추천</h1>
         <p class="sub">
-            매장·사무실·현장 사진을 올리면 AI가 업종을 인식하고,<br />
+            호텔 또는 병원 사진을 올리면 AI가 업종을 인식하고,<br />
             최적의 유니폼 스타일·소재·컬러를 바로 제안합니다.
         </p>
 
@@ -608,17 +608,11 @@
 
         <p class="quick-label">업종을 클릭하면 바로 추천 결과를 확인합니다</p>
         <div class="quick-grid">
-            <button class="quick-btn" data-industry="restaurant" onclick="selectIndustry(this)">
-                <span class="emoji">🍽️</span>요식업
-            </button>
-            <button class="quick-btn" data-industry="medical" onclick="selectIndustry(this)">
-                <span class="emoji">🏥</span>의료·헬스케어
-            </button>
             <button class="quick-btn" data-industry="hotel" onclick="selectIndustry(this)">
                 <span class="emoji">🏨</span>호텔·서비스
             </button>
-            <button class="quick-btn" data-industry="logistics" onclick="selectIndustry(this)">
-                <span class="emoji">🚚</span>물류·제조
+            <button class="quick-btn" data-industry="medical" onclick="selectIndustry(this)">
+                <span class="emoji">🏥</span>병원·의료
             </button>
         </div>
 
@@ -692,10 +686,10 @@
 
         <!-- Developer Note -->
         <div class="notice">
-            💡 <strong>개발자 노트</strong> — 현재는 데모 모드입니다. 실제 Teachable Machine 모델을 학습시킨 후
-            아래 코드의 <code>MODEL_URL</code>을 교체하면 실제 이미지 분류가 작동합니다.<br />
-            학습 방법: <a href="https://teachablemachine.withgoogle.com/train/image" target="_blank"
-                style="color:var(--accent);">teachablemachine.withgoogle.com →</a>
+            🤖 <strong>AI 모델 연동 완료</strong> — 실제 Teachable Machine 모델(<code>dQFioS4gQ</code>)이 연결되어 있습니다.<br />
+            호텔 또는 병원 이미지를 업로드하면 실제 AI가 분류합니다.
+            추가 업종을 늘리려면 <a href="https://teachablemachine.withgoogle.com/train/image" target="_blank"
+                style="color:var(--accent);">Teachable Machine에서 재학습 →</a>
         </div>
     </div>
 
@@ -818,7 +812,7 @@
                 const best = predictions.reduce((a, b) => a.probability > b.probability ? a : b);
 
                 // 클래스명 → 업종 키 매핑 (모델 클래스명에 맞게 수정하세요)
-                const classMap = { '요식업': 'restaurant', '의료': 'medical', '호텔': 'hotel', '물류': 'logistics' };
+                const classMap = { '호텔': 'hotel', '병원': 'medical' };
                 const industry = classMap[best.className] || 'restaurant';
                 showResult(industry, Math.round(best.probability * 100));
             } catch (e) {
