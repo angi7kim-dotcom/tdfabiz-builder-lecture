@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>회사소개 | TOFABIZ — 유니폼 토탈 서비스</title>
+    <meta name="description" content="TOFABIZ는 유니폼 생산·제조, 세탁렌탈, 온라인 맞춤 제작을 하나의 파트너로 제공하는 유니폼 토탈 서비스 기업입니다." />
+    <meta name="keywords" content="TOFABIZ,회사소개,유니폼회사,세탁렌탈회사,단체유니폼제조" />
+    <link rel="canonical" href="https://angi7kim-dotcom.github.io/tdfabiz-builder-lecture/about.html" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css" />
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8037016451454764"
+        crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --bg: #070a10;
+            --bg2: #0b0f17;
+            --text: rgba(255, 255, 255, .92);
+            --muted: rgba(255, 255, 255, .62);
+            --gold: #d7b46a;
+            --gold2: #f0d79a;
+            --accent: #7ee7ff;
+            --green: #4ade80;
+            --line: rgba(255, 255, 255, .12);
+            --radius: 18px;
+            --max: 860px
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            font-family: "Pretendard Variable", Pretendard, system-ui, sans-serif;
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.8;
+            background: radial-gradient(900px 500px at 80% -5%, rgba(215, 180, 106, .18), transparent 60%),
+                linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%)
+        }
+
+        a {
+            color: var(--gold2);
+            text-decoration: none
+        }
+
+        .wrap {
+            width: min(var(--max), calc(100% - 40px));
+            margin: 0 auto;
+            padding: 48px 0 80px
+        }
+
+        .back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-size: 14px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, .10);
+            background: rgba(255, 255, 255, .04);
+            margin-bottom: 36px;
+            transition: .2s
+        }
+
+        .back:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, .08)
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(215, 180, 106, .3);
+            background: rgba(215, 180, 106, .06);
+            color: var(--gold2);
+            font-size: 12px;
+            margin-bottom: 14px
+        }
+
+        h1 {
+            font-size: clamp(28px, 4vw, 40px);
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -.4px;
+            margin-bottom: 16px
+        }
+
+        h1 span {
+            color: var(--gold2)
+        }
+
+        .lead {
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 48px;
+            max-width: 620px
+        }
+
+        h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 48px 0 16px;
+            letter-spacing: -.2px
+        }
+
+        h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 24px 0 10px;
+            color: var(--gold2)
+        }
+
+        p {
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 14px
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 40px 0
+        }
+
+        .stat {
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 24px 20px;
+            text-align: center
+        }
+
+        .stat-num {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--gold2);
+            letter-spacing: -1px
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 4px
+        }
+
+        /* Values */
+        .values {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 24px 0
+        }
+
+        .val-card {
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 22px
+        }
+
+        .val-icon {
+            font-size: 28px;
+            margin-bottom: 10px
+        }
+
+        .val-card h3 {
+            margin: 0 0 8px;
+            color: var(--text)
+        }
+
+        .val-card p {
+            margin: 0;
+            font-size: 14px
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 28px;
+            margin: 24px 0
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 8px;
+            top: 4px;
+            bottom: 4px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--gold), transparent)
+        }
+
+        .tl-item {
+            position: relative;
+            margin-bottom: 24px
+        }
+
+        .tl-dot {
+            position: absolute;
+            left: -24px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--gold);
+            border: 2px solid var(--bg)
+        }
+
+        .tl-year {
+            font-size: 12px;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 4px
+        }
+
+        .tl-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 4px
+        }
+
+        .tl-desc {
+            font-size: 14px;
+            color: var(--muted)
+        }
+
+        /* Services */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 24px 0
+        }
+
+        .srv {
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 20px
+        }
+
+        .srv-emoji {
+            font-size: 28px;
+            margin-bottom: 10px
+        }
+
+        .srv h3 {
+            font-size: 14px;
+            margin: 0 0 8px;
+            color: var(--text)
+        }
+
+        .srv p {
+            font-size: 13px;
+            margin: 0
+        }
+
+        /* CTA */
+        .cta {
+            background: radial-gradient(120% 160% at 10% 10%, rgba(215, 180, 106, .14), transparent 55%), rgba(255, 255, 255, .04);
+            border: 1px solid rgba(215, 180, 106, .3);
+            border-radius: 24px;
+            padding: 36px;
+            text-align: center;
+            margin-top: 48px
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 24px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .18);
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 600;
+            transition: .2s;
+            margin: 6px
+        }
+
+        .btn.primary {
+            background: linear-gradient(135deg, rgba(215, 180, 106, .35), rgba(215, 180, 106, .15));
+            border-color: rgba(215, 180, 106, .5);
+            color: var(--gold2)
+        }
+
+        .btn:hover {
+            transform: translateY(-2px)
+        }
+
+        @media(max-width:640px) {
+
+            .stats,
+            .values,
+            .service-grid {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <a class="back" href="index.html">← TOFABIZ 홈으로</a>
+
+        <div class="hero-tag">🏭 About TOFABIZ</div>
+        <h1>유니폼의 <span>생산부터 관리까지</span><br />하나의 파트너로</h1>
+        <p class="lead">TOFABIZ는 국내 유니폼 제조·세탁렌탈·온라인 맞춤 제작을 원스톱으로 제공하는 유니폼 토탈 서비스 기업입니다. 호텔, 병원, 물류, 요식업, 기업 등 다양한 업종의
+            고객사들이 TOFABIZ와 함께하고 있습니다.</p>
+
+        <!-- AdSense 광고 유닛 -->
+        <ins class="adsbygoogle" style="display:block;margin:24px 0" data-ad-client="ca-pub-8037016451454764"
+            data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-num">15+</div>
+                <div class="stat-label">업종 대응 가능</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">300+</div>
+                <div class="stat-label">협력 고객사</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">1일</div>
+                <div class="stat-label">견적 응답 시간</div>
+            </div>
+        </div>
+
+        <h2>🎯 TOFABIZ의 핵심 가치</h2>
+        <div class="values">
+            <div class="val-card">
+                <div class="val-icon">🔬</div>
+                <h3>품질 우선주의</h3>
+                <p>원단 선정부터 봉제, 살균 세탁까지 각 단계에서 엄격한 품질 기준을 유지합니다. 고객이 처음과 같은 유니폼을 경험할 수 있도록 관리합니다.</p>
+            </div>
+            <div class="val-card">
+                <div class="val-icon">🤝</div>
+                <h3>파트너십</h3>
+                <p>단순 공급업체가 아닌 장기 파트너로서 고객의 유니폼 운영 전략을 함께 설계합니다. 도입 이후에도 지속적인 개선을 지원합니다.</p>
+            </div>
+            <div class="val-card">
+                <div class="val-icon">💡</div>
+                <h3>스마트 운영</h3>
+                <p>세탁 수거 일정, 교체 주기, 재고 현황을 체계적으로 관리하여 담당자의 업무 부담을 줄이고 현장 운영을 최적화합니다.</p>
+            </div>
+            <div class="val-card">
+                <div class="val-icon">🌱</div>
+                <h3>지속가능성</h3>
+                <p>친환경 세탁제 사용, 장수명 원단 채택, 의류 폐기 최소화 등 환경을 고려한 유니폼 운영 방식을 지향합니다.</p>
+            </div>
+        </div>
+
+        <h2>📋 주요 서비스</h2>
+        <div class="service-grid">
+            <div class="srv">
+                <div class="srv-emoji">👕</div>
+                <h3>유니폼 생산·제조</h3>
+                <p>소량부터 대량까지 업종별 맞춤 유니폼 제작. 원단·디자인·기능성 모두 협의 가능합니다.</p>
+            </div>
+            <div class="srv">
+                <div class="srv-emoji">♻️</div>
+                <h3>세탁렌탈 서비스</h3>
+                <p>정기 수거·세탁·배송까지 원스톱 관리. 항균 살균 세탁으로 위생 기준을 충족합니다.</p>
+            </div>
+            <div class="srv">
+                <div class="srv-emoji">💻</div>
+                <h3>온라인 맞춤 제작</h3>
+                <p>온라인에서 디자인·수량·납기를 설정하고 바로 발주. 소량 제작도 빠르게 대응합니다.</p>
+            </div>
+        </div>
+
+        <h2>📅 연혁</h2>
+        <div class="timeline">
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-year">2020</div>
+                <div class="tl-title">TOFABIZ 설립</div>
+                <div class="tl-desc">유니폼 전문 제조기업으로 출발. 호텔·요식업 중심 서비스 개시</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-year">2021</div>
+                <div class="tl-title">세탁렌탈 서비스 런칭</div>
+                <div class="tl-desc">정기 수거·세탁·배송 원스톱 서비스로 사업 영역 확장</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-year">2022</div>
+                <div class="tl-title">의료·병원 분야 진출</div>
+                <div class="tl-desc">항균 기능성 의료 유니폼 라인 출시. 종합병원 납품 시작</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-year">2023</div>
+                <div class="tl-title">온라인 맞춤 제작 플랫폼 오픈</div>
+                <div class="tl-desc">소량 발주를 위한 온라인 주문 시스템 구축. 스타트업 고객 확대</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-year">2024</div>
+                <div class="tl-title">고객사 300개 돌파</div>
+                <div class="tl-desc">전국 주요 거점 수거 네트워크 구축 완료</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-year">2025~</div>
+                <div class="tl-title">AI 추천 시스템 도입</div>
+                <div class="tl-desc">업종 이미지 기반 AI 유니폼 추천 서비스 베타 오픈</div>
+            </div>
+        </div>
+
+        <div class="cta">
+            <h2 style="margin:0 0 12px">함께 시작하실 준비 되셨나요?</h2>
+            <p style="margin-bottom:24px">견적 문의부터 세탁렌탈 수거 신청까지, TOFABIZ가 처음부터 함께합니다.</p>
+            <a class="btn primary" href="calculator.html">🧮 견적 계산기</a>
+            <a class="btn" href="index.html#contact">📬 문의하기</a>
+            <a class="btn" href="recommender.html">🤖 AI 추천기</a>
+        </div>
+    </div>
+</body>
+
+</html>
