@@ -7,6 +7,9 @@
   <title>TOFABIZ | Uniform Total Service</title>
   <meta name="description" content="TOFABIZ — 유니폼 생산제조 · 세탁렌탈 · 온라인 맞춤 제작. 전통 제조의 정교함과 스마트 관리 기술로 유니폼 운영을 혁신합니다." />
   <meta name="theme-color" content="#0b0f17" />
+  <meta name="keywords" content="유니폼,세탁렌탈,맞춤제작,단체유니폼,작업복,호텔유니폼,병원유니폼,TOFABIZ" />
+  <!-- Google AdSense (승인 후 client ID 교체) -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" />
@@ -685,8 +688,8 @@
 
         <nav class="menu" aria-label="주요 메뉴">
           <a href="#services">서비스</a>
-          <a href="#smart">스마트 관리</a>
-          <a href="#sustain">지속가능성</a>
+          <a href="#rental">수거 신청</a>
+          <a href="#reviews">도입 후기</a>
           <a href="#process">프로세스</a>
           <a href="#contact">문의</a>
         </nav>
@@ -1032,27 +1035,108 @@
       </div>
     </section>
 
-    <!-- COMMENTS (giscus) -->
+    <!-- REVIEWS -->
+    <section id="reviews" style="padding: 46px 0 30px;">
+      <div class="container">
+        <div class="section-title reveal">
+          <div>
+            <h2>🌟 도입 후기 / B2B 사례</h2>
+            <p>실제 TOFABIZ를 도입한 기업들의 이야기입니다.</p>
+          </div>
+        </div>
+        <div class="cards">
+          <article class="card reveal">
+            <div class="pill">호텔 · 서비스업</div>
+            <h3>"유니폼이 브랜드가 됐습니다"</h3>
+            <p>세탁렌탈 도입 후 현장 담당자 업무가 눈에 띄게 줄었어요. 매번 세탁·관리하던 것을 TOFABIZ가 루틴으로 처리해줘서 운영이 훨씬 가벼워졌습니다.</p>
+            <div style="margin-top:14px; font-size:13px; color:var(--muted);">— 서울 특급호텔 운영팀</div>
+          </article>
+          <article class="card reveal">
+            <div class="pill">의료 · 헬스케어</div>
+            <h3>"항균 세탁이 가장 큰 장점"</h3>
+            <p>병원 특성상 위생이 최우선인데, 고온 살균 세탁 시스템이 기대 이상이었습니다. 직원들 만족도도 올라가고, 감염 관리에도 도움이 됩니다.</p>
+            <div style="margin-top:14px; font-size:13px; color:var(--muted);">— 수도권 종합병원 총무팀</div>
+          </article>
+          <article class="card reveal">
+            <div class="pill">물류 · 제조현장</div>
+            <h3>"교체 주기가 명확해졌어요"</h3>
+            <p>이전에는 작업복 상태를 일일이 확인해야 했는데, 이제는 TOFABIZ의 수거/검수 리포트로 한 눈에 파악합니다. 분실 줄고 비용도 줄었습니다.</p>
+            <div style="margin-top:14px; font-size:13px; color:var(--muted);">— 인천 물류센터 시설관리팀</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- RENTAL FORM -->
+    <section id="rental" style="padding: 46px 0 30px;">
+      <div class="container">
+        <div class="section-title reveal">
+          <div>
+            <h2>📦 세탁렌탈 정기 수거 신청</h2>
+            <p>정기 수거 일정을 신청하시면 담당자가 동선에 맞는 최적 플랜을 제안해 드립니다.</p>
+          </div>
+        </div>
+        <div class="panel reveal">
+          <form action="https://formspree.io/f/mvzblkby" method="POST">
+            <input type="hidden" name="_subject" value="[TOFABIZ] 세탁렌탈 정기 수거 신청" />
+            <input type="hidden" name="form_type" value="rental_pickup" />
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+              <div><label for="r-company"
+                  style="font-size:13px; color:var(--muted); display:block; margin-bottom:4px;">업체/기관명 *</label>
+                <input id="r-company" name="company" placeholder="예: TOFABIZ 고객사" required />
+              </div>
+              <div><label for="r-name"
+                  style="font-size:13px; color:var(--muted); display:block; margin-bottom:4px;">담당자명 *</label>
+                <input id="r-name" name="name" placeholder="예: 홍길동" required />
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+              <div><label for="r-phone"
+                  style="font-size:13px; color:var(--muted); display:block; margin-bottom:4px;">연락처 *</label>
+                <input id="r-phone" name="phone" placeholder="010-0000-0000" required />
+              </div>
+              <div><label for="r-addr" style="font-size:13px; color:var(--muted); display:block; margin-bottom:4px;">수거
+                  지역 *</label>
+                <input id="r-addr" name="address" placeholder="예: 서울 강남구" required />
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:10px;">
+              <div><label for="r-qty" style="font-size:13px; color:var(--muted); display:block; margin-bottom:4px;">예상
+                  수량</label>
+                <input id="r-qty" name="quantity" placeholder="예: 50벌" />
+              </div>
+              <div><label for="r-day" style="font-size:13px; color:var(--muted); display:block; margin-bottom:4px;">희망
+                  수거 요일</label>
+                <input id="r-day" name="pickup_day" placeholder="예: 화·목요일" />
+              </div>
+              <div><label for="r-freq" style="font-size:13px; color:var(--muted); display:block; margin-bottom:4px;">수거
+                  주기</label>
+                <input id="r-freq" name="frequency" placeholder="예: 주 2회" />
+              </div>
+            </div>
+            <button class="btn primary" type="submit" style="width:100%; padding:14px; margin-top:4px;">수거 신청하기
+              →</button>
+            <p class="hint" style="margin-top:10px; text-align:center;">* 제출 즉시 담당자에게 전달됩니다. 영업일 1일 내 연락드립니다.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMMENTS (Cusdis) -->
     <section id="comments" style="padding: 36px 0 20px;">
       <div class="container">
         <div class="section-title reveal" style="margin-bottom:24px;">
           <div>
-            <h2>💬 댓글</h2>
-            <p>궁금한 점이나 경험을 자유롭게 남겨주세요. GitHub 계정으로 댓글을 작성할 수 있습니다.</p>
+            <h2>💬 댓글 · 문의</h2>
+            <p>로그인 없이 이름과 이메일만으로 댓글을 남길 수 있습니다. 관리자 승인 후 게시됩니다.</p>
           </div>
         </div>
-        <div class="reveal" style="
-          background: rgba(255,255,255,.04);
-          border: 1px solid rgba(255,255,255,.12);
-          border-radius: var(--radius2);
-          padding: 28px;
-          box-shadow: var(--shadow);
-        ">
-          <script src="https://giscus.app/client.js" data-repo="angi7kim-dotcom/tdfabiz-builder-lecture"
-            data-repo-id="R_kgDORaD1gA" data-category="General" data-category-id="DIC_kwDORaD1gM4C3blx"
-            data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0"
-            data-input-position="bottom" data-theme="dark_dimmed" data-lang="ko" crossorigin="anonymous" async>
-            </script>
+        <div class="reveal"
+          style="background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); border-radius: var(--radius2); padding: 28px; box-shadow: var(--shadow);">
+          <div id="cusdis_thread" data-host="https://cusdis.com" data-app-id="29b89f7a-f8c7-401c-b41d-a5939126b856"
+            data-page-id="tofabiz-main" data-page-url="https://angi7kim-dotcom.github.io/tdfabiz-builder-lecture/"
+            data-page-title="TOFABIZ | Uniform Total Service"></div>
+          <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
         </div>
       </div>
     </section>
@@ -1074,9 +1158,11 @@
           </div>
 
           <div class="links" aria-label="푸터 링크">
+            <a href="calculator.html">견적 계산기</a>
+            <a href="recommender.html">AI 추천</a>
+            <a href="#rental">수거 신청</a>
+            <a href="#reviews">도입 후기</a>
             <a href="#contact">문의</a>
-            <a href="#process">프로세스</a>
-            <a href="#services">서비스</a>
             <a href="#top">맨 위로</a>
           </div>
         </div>
