@@ -1,0 +1,911 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>유니폼 스타일 추천기 | TOFABIZ</title>
+    <meta name="description" content="업종 이미지를 업로드하면 AI가 맞춤 유니폼 스타일을 즉시 추천합니다." />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css" />
+
+    <!-- Teachable Machine -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+
+    <style>
+        :root {
+            --bg: #070a10;
+            --bg2: #0b0f17;
+            --card: rgba(255, 255, 255, .06);
+            --line: rgba(255, 255, 255, .12);
+            --text: rgba(255, 255, 255, .92);
+            --muted: rgba(255, 255, 255, .60);
+            --gold: #d7b46a;
+            --gold2: #f0d79a;
+            --accent: #7ee7ff;
+            --green: #4ade80;
+            --radius: 18px;
+            --max: 860px;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            font-family: "Pretendard Variable", Pretendard, system-ui, sans-serif;
+            background: radial-gradient(900px 500px at 80% -5%, rgba(215, 180, 106, .22), transparent 60%),
+                radial-gradient(700px 400px at 10% 10%, rgba(126, 231, 255, .14), transparent 60%),
+                linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .wrap {
+            width: min(var(--max), calc(100% - 40px));
+            margin: 0 auto;
+            padding: 48px 0 80px;
+        }
+
+        /* Header */
+        .back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-size: 14px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, .10);
+            background: rgba(255, 255, 255, .04);
+            margin-bottom: 36px;
+            transition: .2s;
+        }
+
+        .back:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, .08);
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(126, 231, 255, .3);
+            background: rgba(126, 231, 255, .06);
+            color: var(--accent);
+            font-size: 12px;
+            margin-bottom: 14px;
+        }
+
+        h1 {
+            font-size: clamp(26px, 4vw, 38px);
+            line-height: 1.15;
+            letter-spacing: -.4px;
+            margin-bottom: 12px;
+        }
+
+        h1 span {
+            color: var(--gold2);
+        }
+
+        .sub {
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        /* Upload Zone */
+        .upload-zone {
+            border: 2px dashed rgba(255, 255, 255, .18);
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, .03);
+            padding: 48px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: .25s ease;
+            position: relative;
+        }
+
+        .upload-zone:hover,
+        .upload-zone.drag {
+            border-color: rgba(215, 180, 106, .5);
+            background: rgba(215, 180, 106, .04);
+        }
+
+        .upload-zone input {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        .upload-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            margin: 0 auto 16px;
+            background: radial-gradient(circle at 30% 30%, rgba(240, 215, 154, .9), rgba(215, 180, 106, .1) 60%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .upload-zone h3 {
+            font-size: 17px;
+            margin-bottom: 6px;
+        }
+
+        .upload-zone p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* Or Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 22px 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, .10);
+        }
+
+        /* Category Quick Pick */
+        .quick-label {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 32px;
+        }
+
+        .quick-btn {
+            padding: 14px 8px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, .12);
+            background: rgba(255, 255, 255, .04);
+            cursor: pointer;
+            text-align: center;
+            transition: .2s;
+            color: var(--text);
+            font-size: 13px;
+        }
+
+        .quick-btn .emoji {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .quick-btn:hover {
+            border-color: rgba(215, 180, 106, .4);
+            background: rgba(215, 180, 106, .06);
+            transform: translateY(-2px);
+        }
+
+        .quick-btn.active {
+            border-color: var(--gold);
+            background: rgba(215, 180, 106, .12);
+        }
+
+        /* Image Preview */
+        #preview-wrap {
+            display: none;
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        #preview-img {
+            width: 100%;
+            max-height: 280px;
+            object-fit: cover;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 255, 255, .12);
+            display: block;
+        }
+
+        .preview-remove {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, .6);
+            border: 1px solid rgba(255, 255, 255, .2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--text);
+        }
+
+        /* Analyze Button */
+        .btn-analyze {
+            width: 100%;
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid rgba(215, 180, 106, .5);
+            background: radial-gradient(120% 160% at 20% 20%, rgba(240, 215, 154, .3), transparent 55%),
+                linear-gradient(135deg, rgba(215, 180, 106, .2), rgba(255, 255, 255, .04));
+            color: var(--text);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .22s;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-analyze:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 60px rgba(215, 180, 106, .18);
+        }
+
+        .btn-analyze.visible {
+            display: flex;
+        }
+
+        /* Loading */
+        #loading {
+            display: none;
+            text-align: center;
+            padding: 48px 0;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, .1);
+            border-top-color: var(--gold);
+            animation: spin .9s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-text {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .loading-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 16px;
+            max-width: 240px;
+            margin-inline: auto;
+        }
+
+        .loading-step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--muted);
+            text-align: left;
+        }
+
+        .loading-step .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .2);
+            flex: 0 0 auto;
+        }
+
+        .loading-step.done .dot {
+            background: var(--green);
+        }
+
+        .loading-step.active .dot {
+            background: var(--gold);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .4;
+            }
+        }
+
+        /* Result */
+        #result {
+            display: none;
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 20px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(78, 222, 128, .3);
+            background: rgba(78, 222, 128, .06);
+            margin-bottom: 24px;
+        }
+
+        .result-badge {
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            background: rgba(78, 222, 128, .18);
+            color: var(--green);
+            border: 1px solid rgba(78, 222, 128, .3);
+        }
+
+        .confidence-bar {
+            flex: 1;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, .1);
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            border-radius: 3px;
+            background: linear-gradient(90deg, var(--green), var(--accent));
+            transition: width 1.2s ease;
+        }
+
+        .rec-card {
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 255, 255, .12);
+            background: rgba(255, 255, 255, .04);
+            overflow: hidden;
+            margin-bottom: 14px;
+        }
+
+        .rec-header {
+            padding: 14px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .rec-icon {
+            font-size: 20px;
+        }
+
+        .rec-header h3 {
+            font-size: 15px;
+        }
+
+        .rec-body {
+            padding: 14px 18px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .rec-item {
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, .18);
+            border: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .rec-item label {
+            display: block;
+            font-size: 11px;
+            color: var(--muted);
+            margin-bottom: 4px;
+        }
+
+        .rec-item span {
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .color-dots {
+            display: flex;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .color-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, .15);
+        }
+
+        /* CTA Form */
+        .cta-form {
+            padding: 24px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(215, 180, 106, .3);
+            background: radial-gradient(120% 160% at 10% 10%, rgba(215, 180, 106, .1), transparent 55%), rgba(255, 255, 255, .03);
+            margin-top: 24px;
+        }
+
+        .cta-form h3 {
+            font-size: 17px;
+            margin-bottom: 6px;
+        }
+
+        .cta-form p {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 11px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, .12);
+            background: rgba(0, 0, 0, .22);
+            color: var(--text);
+            font-size: 14px;
+            outline: none;
+            font-family: inherit;
+            transition: .2s;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: rgba(215, 180, 106, .4);
+            box-shadow: 0 0 0 3px rgba(215, 180, 106, .1);
+        }
+
+        textarea {
+            min-height: 90px;
+            resize: vertical;
+            margin-bottom: 10px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(215, 180, 106, .5);
+            background: radial-gradient(120% 160% at 20% 20%, rgba(240, 215, 154, .28), transparent 55%),
+                linear-gradient(135deg, rgba(215, 180, 106, .18), rgba(255, 255, 255, .03));
+            color: var(--text);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 16px 50px rgba(215, 180, 106, .16);
+        }
+
+        /* Reset */
+        .btn-reset {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            margin-top: 12px;
+            border: 1px solid rgba(255, 255, 255, .12);
+            background: rgba(255, 255, 255, .04);
+            color: var(--muted);
+            font-size: 14px;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .btn-reset:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, .08);
+        }
+
+        /* Notice */
+        .notice {
+            padding: 12px 14px;
+            border-radius: 12px;
+            margin-top: 32px;
+            border: 1px solid rgba(126, 231, 255, .2);
+            background: rgba(126, 231, 255, .04);
+            color: rgba(126, 231, 255, .85);
+            font-size: 12.5px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 560px) {
+            .quick-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .rec-body {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+
+        <a class="back" href="index.html">← TOFABIZ 홈으로</a>
+
+        <div class="hero-tag">
+            <span>🤖</span> AI Powered by Teachable Machine
+        </div>
+        <h1>업종 이미지로<br /><span>맞춤 유니폼</span> 즉시 추천</h1>
+        <p class="sub">
+            매장·사무실·현장 사진을 올리면 AI가 업종을 인식하고,<br />
+            최적의 유니폼 스타일·소재·컬러를 바로 제안합니다.
+        </p>
+
+        <!-- Upload Zone -->
+        <div class="upload-zone" id="drop-zone">
+            <input type="file" id="file-input" accept="image/*" />
+            <div class="upload-icon">📷</div>
+            <h3>이미지를 드래그하거나 클릭해서 업로드</h3>
+            <p>JPG, PNG, WEBP · 최대 10MB</p>
+        </div>
+
+        <div class="divider">또는 업종을 직접 선택</div>
+
+        <p class="quick-label">업종을 클릭하면 바로 추천 결과를 확인합니다</p>
+        <div class="quick-grid">
+            <button class="quick-btn" data-industry="restaurant" onclick="selectIndustry(this)">
+                <span class="emoji">🍽️</span>요식업
+            </button>
+            <button class="quick-btn" data-industry="medical" onclick="selectIndustry(this)">
+                <span class="emoji">🏥</span>의료·헬스케어
+            </button>
+            <button class="quick-btn" data-industry="hotel" onclick="selectIndustry(this)">
+                <span class="emoji">🏨</span>호텔·서비스
+            </button>
+            <button class="quick-btn" data-industry="logistics" onclick="selectIndustry(this)">
+                <span class="emoji">🚚</span>물류·제조
+            </button>
+        </div>
+
+        <!-- Image Preview -->
+        <div id="preview-wrap">
+            <img id="preview-img" src="" alt="업로드 이미지" />
+            <button class="preview-remove" onclick="resetAll()">✕</button>
+        </div>
+
+        <button class="btn-analyze" id="btn-analyze" onclick="runAnalysis()">
+            🔍 AI 분석 시작하기
+        </button>
+
+        <!-- Loading -->
+        <div id="loading">
+            <div class="spinner"></div>
+            <p class="loading-text">AI가 이미지를 분석하고 있습니다...</p>
+            <div class="loading-steps">
+                <div class="loading-step" id="step1">
+                    <div class="dot"></div><span>이미지 전처리</span>
+                </div>
+                <div class="loading-step" id="step2">
+                    <div class="dot"></div><span>업종 패턴 인식</span>
+                </div>
+                <div class="loading-step" id="step3">
+                    <div class="dot"></div><span>유니폼 DB 매칭</span>
+                </div>
+                <div class="loading-step" id="step4">
+                    <div class="dot"></div><span>추천 리포트 생성</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result -->
+        <div id="result">
+            <div class="result-header">
+                <div>
+                    <div style="font-size:12px; color:var(--muted); margin-bottom:4px;">인식된 업종</div>
+                    <div id="result-label" style="font-size:18px; font-weight:700;"></div>
+                </div>
+                <div class="result-badge" id="result-conf"></div>
+                <div class="confidence-bar" style="margin-left:auto; width:120px;">
+                    <div class="confidence-fill" id="conf-bar" style="width:0%"></div>
+                </div>
+            </div>
+
+            <div id="rec-cards"></div>
+
+            <!-- Formspree 견적 연결 -->
+            <div class="cta-form">
+                <h3>🎯 견적 바로 신청하기</h3>
+                <p id="cta-desc">AI 추천 결과를 포함해 견적을 바로 요청드립니다.</p>
+                <form action="https://formspree.io/f/mvzblkby" method="POST">
+                    <input type="hidden" name="_subject" value="[TOFABIZ] AI 추천 기반 견적 문의" />
+                    <input type="hidden" name="ai_recommendation" id="hidden-rec" value="" />
+                    <div class="form-row">
+                        <input name="company" placeholder="회사/기관명" required />
+                        <input name="name" placeholder="담당자명" required />
+                    </div>
+                    <div class="form-row">
+                        <input name="phone" placeholder="연락처" />
+                        <input name="email" type="email" placeholder="이메일" required />
+                    </div>
+                    <textarea name="message" id="auto-message" placeholder="문의 내용"></textarea>
+                    <button class="btn-submit" type="submit">견적 신청하기 →</button>
+                </form>
+            </div>
+
+            <button class="btn-reset" onclick="resetAll()">다시 분석하기</button>
+        </div>
+
+        <!-- Developer Note -->
+        <div class="notice">
+            💡 <strong>개발자 노트</strong> — 현재는 데모 모드입니다. 실제 Teachable Machine 모델을 학습시킨 후
+            아래 코드의 <code>MODEL_URL</code>을 교체하면 실제 이미지 분류가 작동합니다.<br />
+            학습 방법: <a href="https://teachablemachine.withgoogle.com/train/image" target="_blank"
+                style="color:var(--accent);">teachablemachine.withgoogle.com →</a>
+        </div>
+    </div>
+
+    <script>
+        // ══════════════════════════════════════════
+        // Teachable Machine 모델 URL (학습 후 교체)
+        // ══════════════════════════════════════════
+        const MODEL_URL = null; // 예: "https://teachablemachine.withgoogle.com/models/xxxxxxxx/"
+        let tmModel = null;
+        let selectedIndustry = null;
+        let imageSelected = false;
+
+        // 업종별 추천 데이터
+        const RECOMMENDATIONS = {
+            restaurant: {
+                label: "🍽️ 요식업 / 외식업",
+                confidence: 94,
+                items: [
+                    { icon: "👕", title: "추천 스타일", label: "기본 스타일", value: "앞치마 세트 + 폴로 셔츠<br/>조리복 / 홀 유니폼 분리" },
+                    { icon: "🧵", title: "소재", label: "권장 원단", value: "항균 폴리에스터<br/>오염 방지 가공 (DWR)" },
+                    { icon: "🎨", title: "컬러 팔레트", label: "추천 색상", value: "화이트 · 블랙 · 네이비", colors: ["#ffffff", "#1a1a1a", "#1e3a5f"] },
+                    { icon: "♻️", title: "관리", label: "세탁렌탈 주기", value: "주 2회 수거 권장<br/>살균 세탁 필수" },
+                ]
+            },
+            medical: {
+                label: "🏥 의료 / 헬스케어",
+                confidence: 97,
+                items: [
+                    { icon: "👗", title: "추천 스타일", label: "기본 스타일", value: "스크럽 세트 + 가운<br/>직종별 컬러 코드 구분" },
+                    { icon: "🧵", title: "소재", label: "권장 원단", value: "항균·방수 기능성 소재<br/>세탁 내구성 300회 이상" },
+                    { icon: "🎨", title: "컬러 팔레트", label: "추천 색상", value: "화이트 · 하늘색 · 민트", colors: ["#ffffff", "#87ceeb", "#98d8c8"] },
+                    { icon: "♻️", title: "관리", label: "세탁렌탈 주기", value: "매일 수거 권장<br/>고온 살균 필수" },
+                ]
+            },
+            hotel: {
+                label: "🏨 호텔 / 서비스업",
+                confidence: 91,
+                items: [
+                    { icon: "💼", title: "추천 스타일", label: "기본 스타일", value: "정장형 유니폼<br/>부서별 차별화 디자인" },
+                    { icon: "🧵", title: "소재", label: "권장 원단", value: "고급 혼방 (T/R, T/W)<br/>주름 방지·형태 안정성" },
+                    { icon: "🎨", title: "컬러 팔레트", label: "추천 색상", value: "네이비 · 버건디 · 블랙", colors: ["#1e3a5f", "#722f37", "#1a1a1a"] },
+                    { icon: "♻️", title: "관리", label: "세탁렌탈 주기", value: "주 3회 수거 권장<br/>드라이클리닝 옵션" },
+                ]
+            },
+            logistics: {
+                label: "🚚 물류 / 제조·현장",
+                confidence: 89,
+                items: [
+                    { icon: "🦺", title: "추천 스타일", label: "기본 스타일", value: "카고 작업복 + 조끼<br/>반사 테이프 안전 기능" },
+                    { icon: "🧵", title: "소재", label: "권장 원단", value: "내구성 면혼방 (TC)<br/>발수·방오 가공" },
+                    { icon: "🎨", title: "컬러 팔레트", label: "추천 색상", value: "형광 오렌지 · 네이비 · 회색", colors: ["#ff6b00", "#1e3a5f", "#6b7280"] },
+                    { icon: "♻️", title: "관리", label: "세탁렌탈 주기", value: "주 1~2회 수거<br/>강력 세탁 프로그램" },
+                ]
+            }
+        };
+
+        // 파일 업로드 핸들러
+        const fileInput = document.getElementById('file-input');
+        const dropZone = document.getElementById('drop-zone');
+
+        fileInput.addEventListener('change', e => {
+            const file = e.target.files[0];
+            if (file) showPreview(file);
+        });
+
+        dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag'));
+        dropZone.addEventListener('drop', e => {
+            e.preventDefault(); dropZone.classList.remove('drag');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) showPreview(file);
+        });
+
+        function showPreview(file) {
+            const reader = new FileReader();
+            reader.onload = ev => {
+                document.getElementById('preview-img').src = ev.target.result;
+                document.getElementById('preview-wrap').style.display = 'block';
+                dropZone.style.display = 'none';
+                document.querySelector('.divider').style.display = 'none';
+                document.querySelector('.quick-label').style.display = 'none';
+                document.querySelector('.quick-grid').style.display = 'none';
+                imageSelected = true;
+                document.getElementById('btn-analyze').classList.add('visible');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function selectIndustry(btn) {
+            document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            selectedIndustry = btn.dataset.industry;
+            // 직접 선택은 바로 분석
+            runAnalysis();
+        }
+
+        async function runAnalysis() {
+            const industry = selectedIndustry || detectFromImage();
+
+            document.getElementById('btn-analyze').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+
+            // 실제 Teachable Machine 모델이 있으면 사용
+            if (MODEL_URL && imageSelected) {
+                await runTeachableMachine();
+            } else {
+                await runSimulation(industry);
+            }
+        }
+
+        // ── 실제 Teachable Machine 연동 ──
+        async function runTeachableMachine() {
+            try {
+                if (!tmModel) {
+                    tmModel = await tmImage.load(MODEL_URL + 'model.json', MODEL_URL + 'metadata.json');
+                }
+                const img = document.getElementById('preview-img');
+                const predictions = await tmModel.predict(img);
+                const best = predictions.reduce((a, b) => a.probability > b.probability ? a : b);
+
+                // 클래스명 → 업종 키 매핑 (모델 클래스명에 맞게 수정하세요)
+                const classMap = { '요식업': 'restaurant', '의료': 'medical', '호텔': 'hotel', '물류': 'logistics' };
+                const industry = classMap[best.className] || 'restaurant';
+                showResult(industry, Math.round(best.probability * 100));
+            } catch (e) {
+                await runSimulation(selectedIndustry || 'restaurant');
+            }
+        }
+
+        // ── 데모 시뮬레이션 ──
+        async function runSimulation(industry) {
+            const steps = ['step1', 'step2', 'step3', 'step4'];
+            for (let i = 0; i < steps.length; i++) {
+                if (i > 0) document.getElementById(steps[i - 1]).classList.remove('active');
+                document.getElementById(steps[i]).classList.add('active');
+                await delay(600 + Math.random() * 400);
+                document.getElementById(steps[i]).classList.remove('active');
+                document.getElementById(steps[i]).classList.add('done');
+            }
+            await delay(300);
+
+            const key = industry || randomIndustry();
+            const rec = RECOMMENDATIONS[key];
+            showResult(key, rec.confidence);
+        }
+
+        function showResult(industryKey, confidence) {
+            document.getElementById('loading').style.display = 'none';
+            const rec = RECOMMENDATIONS[industryKey];
+            document.getElementById('result-label').textContent = rec.label;
+            document.getElementById('result-conf').textContent = `신뢰도 ${confidence}%`;
+            setTimeout(() => {
+                document.getElementById('conf-bar').style.width = confidence + '%';
+            }, 100);
+
+            // 추천 카드
+            const cards = document.getElementById('rec-cards');
+            cards.innerHTML = `
+        <div class="rec-card">
+          <div class="rec-header">
+            <span class="rec-icon">✨</span>
+            <h3>${rec.label} 맞춤 유니폼 추천</h3>
+          </div>
+          <div class="rec-body">
+            ${rec.items.map(item => `
+              <div class="rec-item">
+                <label>${item.label}</label>
+                <span>${item.value}</span>
+                ${item.colors ? `<div class="color-dots">${item.colors.map(c => `<div class="color-dot" style="background:${c}"></div>`).join('')}</div>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+            // Formspree 자동 메시지
+            document.getElementById('hidden-rec').value = rec.label;
+            document.getElementById('auto-message').value = `AI 추천 업종: ${rec.label}\n신뢰도: ${confidence}%\n\n추천 스타일로 견적을 받고 싶습니다.`;
+            document.getElementById('cta-desc').textContent = `${rec.label} 맞춤 유니폼 견적을 즉시 요청합니다.`;
+
+            document.getElementById('result').style.display = 'block';
+        }
+
+        function resetAll() {
+            selectedIndustry = null; imageSelected = false;
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('preview-wrap').style.display = 'none';
+            document.getElementById('btn-analyze').classList.remove('visible');
+            dropZone.style.display = 'block';
+            document.querySelector('.divider').style.display = 'flex';
+            document.querySelector('.quick-label').style.display = 'block';
+            document.querySelector('.quick-grid').style.display = 'grid';
+            document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('active'));
+            ['step1', 'step2', 'step3', 'step4'].forEach(id => {
+                document.getElementById(id).classList.remove('active', 'done');
+            });
+            document.getElementById('conf-bar').style.width = '0%';
+            fileInput.value = '';
+        }
+
+        function randomIndustry() {
+            const keys = Object.keys(RECOMMENDATIONS);
+            return keys[Math.floor(Math.random() * keys.length)];
+        }
+
+        function detectFromImage() { return randomIndustry(); }
+        function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+    </script>
+</body>
+
+</html>
